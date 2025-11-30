@@ -8,27 +8,23 @@ import (
 	"strings"
 )
 
-func Part1(input string) int {
+func readPairs(input string) (left []int, right []int, err error) {
 	lines, err := utils.ReadLines(input)
 	if err != nil {
-		fmt.Printf("Error reading input: %v\n", err)
-		return 0
+		return nil, nil, fmt.Errorf("error reading input: %v", err)
 	}
 
-	var left, right []int
 	for _, line := range lines {
 		parts := strings.Fields(line)
 
 		l, err := strconv.Atoi(parts[0])
 		if err != nil {
-			fmt.Printf("Error converting left value: %v\n", err)
-			return 0
+			return nil, nil, fmt.Errorf("error converting left value: %v", err)
 		}
 
 		r, err := strconv.Atoi(parts[1])
 		if err != nil {
-			fmt.Printf("Error converting right value: %v\n", err)
-			return 0
+			return nil, nil, fmt.Errorf("error converting right value: %v", err)
 		}
 
 		left = append(left, l)
@@ -37,6 +33,15 @@ func Part1(input string) int {
 
 	sort.Ints(left)
 	sort.Ints(right)
+
+	return left, right, nil
+}
+
+func Part1(input string) int {
+	left, right, err := readPairs(input)
+	if err != nil {
+		panic(err)
+	}
 
 	diffSum := 0
 	for i := range left {
@@ -56,5 +61,22 @@ func Part1(input string) int {
 }
 
 func Part2(input string) int {
-	return 0
+	left, right, err := readPairs(input)
+	if err != nil {
+		panic(err)
+	}
+
+	similarityScore := 0
+	for i, l := range left {
+		matches := 0
+		for _, r := range right {
+			if l == r {
+				matches++
+			}
+		}
+		utils.Debug("[%d] %d matches %d times", i, l, matches)
+		similarityScore += matches * l
+	}
+
+	return similarityScore
 }

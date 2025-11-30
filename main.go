@@ -2,7 +2,6 @@ package main
 
 import (
 	"aoc/2024/day1"
-	"aoc/utils"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -27,7 +26,7 @@ func main() {
 
 	inputPath := filepath.Join(year, fmt.Sprintf("day%s", day), inputFile)
 
-	utils.DebugEnabled = true
+	// utils.DebugEnabled = true
 
 	if year == "2024" {
 		if day == "1" {
