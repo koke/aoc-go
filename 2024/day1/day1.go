@@ -48,9 +48,13 @@ func Part1(input string) int {
 			diff = -diff
 		}
 
-		fmt.Printf("Pair %d: left=%d, right=%d, diff=%d\n", i+1, l, r, diff)
+		utils.Debug("Pair %d: left=%d, right=%d, diff=%d", i+1, l, r, diff)
 		diffSum += diff
 	}
 
 	return diffSum
+}
+
+func Part2(input string) int {
+	return 0
 }
