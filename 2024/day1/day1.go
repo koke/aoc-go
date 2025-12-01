@@ -8,6 +8,8 @@ import (
 	"strings"
 )
 
+type Day struct{}
+
 func readPairs(input string) (left []int, right []int, err error) {
 	lines, err := utils.ReadLines(input)
 	if err != nil {
@@ -37,7 +39,7 @@ func readPairs(input string) (left []int, right []int, err error) {
 	return left, right, nil
 }
 
-func Part1(input string) int {
+func (Day) Part1(input string) int {
 	left, right, err := readPairs(input)
 	if err != nil {
 		panic(err)
@@ -60,7 +62,7 @@ func Part1(input string) int {
 	return diffSum
 }
 
-func Part2(input string) int {
+func (Day) Part2(input string) int {
 	left, right, err := readPairs(input)
 	if err != nil {
 		panic(err)

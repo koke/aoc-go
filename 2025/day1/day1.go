@@ -6,6 +6,8 @@ import (
 	"strconv"
 )
 
+type Day struct{}
+
 func parseInput(input string) ([]int, error) {
 	lines, err := utils.ReadLines(input)
 	if err != nil {
@@ -50,7 +52,7 @@ func turnDial(current int, rotation int) (int, int) {
 	return current, clicks
 }
 
-func Part1(input string) int {
+func (Day) Part1(input string) int {
 	rotations, err := parseInput(input)
 	if err != nil {
 		fmt.Println("Error parsing input:", err)
@@ -75,7 +77,7 @@ func Part1(input string) int {
 	return password
 }
 
-func Part2(input string) int {
+func (Day) Part2(input string) int {
 	rotations, err := parseInput(input)
 	if err != nil {
 		fmt.Println("Error parsing input:", err)

@@ -6,7 +6,6 @@ import (
 	"aoc/utils"
 	"fmt"
 	"os"
-	"path/filepath"
 )
 
 func main() {
@@ -26,21 +25,16 @@ func main() {
 		inputFile = "test.txt"
 	}
 
-	inputPath := filepath.Join(year, fmt.Sprintf("day%s", day), inputFile)
-
-	utils.DebugEnabled = true
+	utils.DebugEnabled = false
 
 	switch year {
 	case "2024":
 		if day == "1" {
-			fmt.Printf("Running 2024 Day 1\n")
-			fmt.Println("Part 1:", day1_2024.Part1(inputPath))
-			fmt.Println("Part 2:", day1_2024.Part2(inputPath))
+			utils.RunDay(year, day, &day1_2024.Day{}, inputFile)
 		}
 	case "2025":
 		if day == "1" {
-			fmt.Println("Part 1:", day1_2025.Part1(inputPath))
-			fmt.Println("Part 2:", day1_2025.Part2(inputPath))
+			utils.RunDay(year, day, &day1_2025.Day{}, inputFile)
 		}
 	default:
 		fmt.Printf("%s/%s not implemented yet\n", year, day)
