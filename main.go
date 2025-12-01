@@ -3,6 +3,7 @@ package main
 import (
 	day1_2024 "aoc/2024/day1"
 	day2_2024 "aoc/2024/day2"
+	day3_2024 "aoc/2024/day3"
 	day1_2025 "aoc/2025/day1"
 	"aoc/utils"
 	"fmt"
@@ -34,6 +35,8 @@ func main() {
 		day = &day1_2024.Day{}
 	case "2024/2":
 		day = &day2_2024.Day{}
+	case "2024/3":
+		day = &day3_2024.Day{}
 	case "2025/1":
 		day = &day1_2025.Day{}
 	default:
