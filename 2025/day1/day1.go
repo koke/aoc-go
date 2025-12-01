@@ -7,13 +7,6 @@ import (
 
 type Day struct{}
 
-func abs(x int) int {
-	if x < 0 {
-		return -x
-	}
-	return x
-}
-
 // Returns x modulo 100, wrapping around correctly for negative numbers
 func circlemod(x int) int {
 	x = x % 100
@@ -57,7 +50,7 @@ func turnDial(current int, rotation int) (int, int) {
 	}
 
 	// Then, if we moved beyond the 100 range, we count how many times we passed 0
-	clicks += abs(final / 100)
+	clicks += utils.Abs(final / 100)
 
 	return circlemod(final), clicks
 }
