@@ -1,7 +1,9 @@
 package main
 
 import (
-	"aoc/2024/day1"
+	day1_2024 "aoc/2024/day1"
+	day1_2025 "aoc/2025/day1"
+	"aoc/utils"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -26,15 +28,21 @@ func main() {
 
 	inputPath := filepath.Join(year, fmt.Sprintf("day%s", day), inputFile)
 
-	// utils.DebugEnabled = true
+	utils.DebugEnabled = true
 
-	if year == "2024" {
+	switch year {
+	case "2024":
 		if day == "1" {
 			fmt.Printf("Running 2024 Day 1\n")
-			fmt.Println("Part 1:", day1.Part1(inputPath))
-			fmt.Println("Part 2:", day1.Part2(inputPath))
+			fmt.Println("Part 1:", day1_2024.Part1(inputPath))
+			fmt.Println("Part 2:", day1_2024.Part2(inputPath))
 		}
-	} else {
+	case "2025":
+		if day == "1" {
+			fmt.Println("Part 1:", day1_2025.Part1(inputPath))
+			fmt.Println("Part 2:", day1_2025.Part2(inputPath))
+		}
+	default:
 		fmt.Printf("%s/%s not implemented yet\n", year, day)
 		os.Exit(1)
 	}
