@@ -9,35 +9,34 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 3 {
+	if len(os.Args) < 2 {
 		fmt.Println("Usage: go run . <year> <day> [test]")
-		fmt.Println("Example: go run . 2024 1")
-		fmt.Println("Example: go run . 2024 1 test")
+		fmt.Println("Example: go run . 2024/1")
+		fmt.Println("Example: go run . 2024/1 test")
 		os.Exit(1)
 	}
 
-	year := os.Args[1]
-	day := os.Args[2]
+	input := os.Args[1]
 
 	// Determine if using test input
 	inputFile := "input.txt"
-	if len(os.Args) > 3 && os.Args[3] == "test" {
+	if len(os.Args) > 2 && os.Args[2] == "test" {
 		inputFile = "test.txt"
 	}
 
 	utils.DebugEnabled = false
 
-	switch year {
-	case "2024":
-		if day == "1" {
-			utils.RunDay(year, day, &day1_2024.Day{}, inputFile)
-		}
-	case "2025":
-		if day == "1" {
-			utils.RunDay(year, day, &day1_2025.Day{}, inputFile)
-		}
+	var day utils.Day
+
+	switch input {
+	case "2024/1":
+		day = &day1_2024.Day{}
+	case "2025/1":
+		day = &day1_2025.Day{}
 	default:
-		fmt.Printf("%s/%s not implemented yet\n", year, day)
+		fmt.Printf("%s not implemented yet\n", input)
 		os.Exit(1)
 	}
+
+	utils.RunDay(input, day, inputFile)
 }

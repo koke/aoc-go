@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -11,7 +12,11 @@ type Day interface {
 	Part2(inputPath string) int
 }
 
-func RunDay(year string, day string, d Day, inputFile string) {
+func RunDay(input string, d Day, inputFile string) {
+	parts := strings.Split(input, "/")
+	year := parts[0]
+	day := parts[1]
+
 	inputPath := filepath.Join(year, fmt.Sprintf("day%s", day), inputFile)
 
 	fmt.Printf("Running %s Day %s\n", year, day)
