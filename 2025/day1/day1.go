@@ -8,6 +8,22 @@ import (
 
 type Day struct{}
 
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
+// Returns x modulo 100, wrapping around correctly for negative numbers
+func circlemod(x int) int {
+	x = x % 100
+	if x < 0 {
+		x += 100
+	}
+	return x
+}
+
 func parseInput(input string) ([]int, error) {
 	lines, err := utils.ReadLines(input)
 	if err != nil {
@@ -31,25 +47,20 @@ func parseInput(input string) ([]int, error) {
 }
 
 func turnDial(current int, rotation int) (int, int) {
-	step := 1
+	// Basically, we want to add current+coration modulo 100
+	// but we also want to count how many times we pass 0, not including the start point
+	final := current + rotation
 	clicks := 0
-	if rotation < 0 {
-		step = -1
-		rotation = -rotation
+
+	// If we went from nevative to positive or positive to negative, we passed 0 at least once
+	if current < 0 && final >= 0 || current > 0 && final <= 0 {
+		clicks++
 	}
-	for range rotation {
-		current += step
-		if current == 100 {
-			current = 0
-		}
-		if current == 0 {
-			clicks++
-		}
-		if current == -1 {
-			current = 99
-		}
-	}
-	return current, clicks
+
+	// Then, if we moved beyond the 100 range, we count how many times we passed 0
+	clicks += abs(final / 100)
+
+	return circlemod(final), clicks
 }
 
 func (Day) Part1(input string) int {
