@@ -6,6 +6,7 @@ import (
 	day3_2024 "aoc/2024/day3"
 	day1_2025 "aoc/2025/day1"
 	day2_2025 "aoc/2025/day2"
+	day3_2025 "aoc/2025/day3"
 	"aoc/utils"
 	"fmt"
 	"os"
@@ -42,6 +43,8 @@ func main() {
 		day = &day1_2025.Day{}
 	case "2025/2":
 		day = &day2_2025.Day{}
+	case "2025/3":
+		day = &day3_2025.Day{}
 	default:
 		fmt.Printf("%s not implemented yet\n", input)
 		os.Exit(1)
