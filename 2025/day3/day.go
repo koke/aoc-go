@@ -3,22 +3,31 @@ package day3_2025
 import (
 	"aoc/utils"
 	"fmt"
+	"strings"
 )
 
 type Day struct{}
 
-func maxJoltage(bank string) int {
-	battery1 := '0'
-	battery2 := '0'
+func maxJoltage(bank string, batteriesOn int) int {
+	joltage := []byte(strings.Repeat("0", batteriesOn))
 
-	for pos, battery := range bank {
-		if battery > battery1 && pos+1 < len(bank) {
-			battery1, battery2 = battery, 0
-		} else if battery > battery2 {
-			battery2 = battery
+	for bankPos := range len(bank) {
+		minPos := max(0, batteriesOn-(len(bank)-bankPos))
+		for joltagePos := minPos; joltagePos < batteriesOn; joltagePos++ {
+			if bank[bankPos] > joltage[joltagePos] {
+				prevJoltage := make([]byte, len(joltage))
+				copy(prevJoltage, joltage)
+				joltage[joltagePos] = bank[bankPos]
+				// Clear everything to the right of joltagePos
+				for k := joltagePos + 1; k < len(joltage); k++ {
+					joltage[k] = '0'
+				}
+				break
+			}
 		}
 	}
-	return int(battery1-'0')*10 + int(battery2-'0')
+
+	return utils.Atoi(string(joltage))
 }
 
 func (Day) Part1(input string) int {
@@ -29,7 +38,7 @@ func (Day) Part1(input string) int {
 
 	totalJoltage := 0
 	for _, line := range lines {
-		joltage := maxJoltage(line)
+		joltage := maxJoltage(line, 2)
 		fmt.Println("Bank:", line, "Max Joltage:", joltage)
 		totalJoltage += joltage
 	}
@@ -37,5 +46,16 @@ func (Day) Part1(input string) int {
 }
 
 func (Day) Part2(input string) int {
-	return 0
+	lines, err := utils.ReadLines(input)
+	if err != nil {
+		panic(err)
+	}
+
+	totalJoltage := 0
+	for _, line := range lines {
+		joltage := maxJoltage(line, 12)
+		fmt.Println("Bank:", line, "Max Joltage:", joltage)
+		totalJoltage += joltage
+	}
+	return totalJoltage
 }
