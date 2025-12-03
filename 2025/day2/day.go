@@ -1,6 +1,7 @@
 package day2_2025
 
 import (
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -19,7 +20,7 @@ func parseInput(filename string) []Range {
 	}
 
 	var ranges []Range
-	for _, rangeStr := range strings.Split(strings.TrimSpace(string(data)), ",") {
+	for rangeStr := range strings.SplitSeq(strings.TrimSpace(string(data)), ",") {
 		rangeParts := strings.Split(rangeStr, "-")
 		lower, err := strconv.Atoi(rangeParts[0])
 		if err != nil {
@@ -35,29 +36,16 @@ func parseInput(filename string) []Range {
 	return ranges
 }
 
-func isValid(n int) bool {
+func isValid(n int, maxRepeat int) bool {
 	number := strconv.Itoa(n)
 	numberLen := len(number)
 
-	if numberLen%2 == 0 {
-		left := number[:numberLen/2]
-		right := number[numberLen/2:]
-		valid := left != right
-
-		if !valid {
-			return false
+	for chunkSize := numberLen / 2; chunkSize >= 1; chunkSize-- {
+		repeatCount := numberLen / (chunkSize)
+		if repeatCount > maxRepeat {
+			return true
 		}
-	}
-	return true
-}
-
-func isValid2(n int) bool {
-	number := strconv.Itoa(n)
-	numberLen := len(number)
-
-	for chunkSize := range numberLen / 2 {
-		repeatCount := numberLen / (chunkSize + 1)
-		chunk := number[:chunkSize+1]
+		chunk := number[:chunkSize]
 		repeated := strings.Repeat(chunk, repeatCount)
 		valid := repeated != number
 		if !valid {
@@ -67,16 +55,14 @@ func isValid2(n int) bool {
 	return true
 }
 
-func (Day) Part1(input string) int {
+func validateInput(input string, maxRepeat int) int {
 	ranges := parseInput(input)
 
 	invalidSum := 0
 
 	for _, r := range ranges {
 		for n := r.low; n <= r.high; n++ {
-			if isValid(n) {
-				// fmt.Printf("Valid number: %d\n", n)
-			} else {
+			if !isValid(n, maxRepeat) {
 				invalidSum += n
 			}
 		}
@@ -85,18 +71,10 @@ func (Day) Part1(input string) int {
 	return invalidSum
 }
 
+func (Day) Part1(input string) int {
+	return validateInput(input, 2)
+}
+
 func (Day) Part2(input string) int {
-	ranges := parseInput(input)
-
-	invalidSum := 0
-
-	for _, r := range ranges {
-		for n := r.low; n <= r.high; n++ {
-			if !isValid2(n) {
-				invalidSum += n
-			}
-		}
-	}
-
-	return invalidSum
+	return validateInput(input, math.MaxInt)
 }
