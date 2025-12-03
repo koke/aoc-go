@@ -1,7 +1,6 @@
 package day2_2025
 
 import (
-	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -44,29 +43,40 @@ func isValid(n int) bool {
 		left := number[:numberLen/2]
 		right := number[numberLen/2:]
 		valid := left != right
-		// fmt.Printf("Checking number %d: left='%s', right='%s', valid=%v\n", n, left, right, valid)
+
 		if !valid {
 			return false
 		}
-	} else {
-		// fmt.Printf("Number %d has odd length, automatically valid\n", n)
+	}
+	return true
+}
+
+func isValid2(n int) bool {
+	number := strconv.Itoa(n)
+	numberLen := len(number)
+
+	for chunkSize := range numberLen / 2 {
+		repeatCount := numberLen / (chunkSize + 1)
+		chunk := number[:chunkSize+1]
+		repeated := strings.Repeat(chunk, repeatCount)
+		valid := repeated != number
+		if !valid {
+			return false
+		}
 	}
 	return true
 }
 
 func (Day) Part1(input string) int {
 	ranges := parseInput(input)
-	fmt.Printf("Parsed ranges: %+v\n", ranges)
 
 	invalidSum := 0
 
 	for _, r := range ranges {
-		fmt.Printf("Processing range: %d-%d\n", r.low, r.high)
 		for n := r.low; n <= r.high; n++ {
 			if isValid(n) {
 				// fmt.Printf("Valid number: %d\n", n)
 			} else {
-				fmt.Printf("Invalid number: %d\n", n)
 				invalidSum += n
 			}
 		}
@@ -76,5 +86,17 @@ func (Day) Part1(input string) int {
 }
 
 func (Day) Part2(input string) int {
-	return 0
+	ranges := parseInput(input)
+
+	invalidSum := 0
+
+	for _, r := range ranges {
+		for n := r.low; n <= r.high; n++ {
+			if !isValid2(n) {
+				invalidSum += n
+			}
+		}
+	}
+
+	return invalidSum
 }
