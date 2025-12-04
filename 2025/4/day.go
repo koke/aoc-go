@@ -48,12 +48,16 @@ func isAccessible(grid [][]bool, x, y int) bool {
 }
 
 func calculateAccessibilityGrid(grid [][]bool) ([][]bool, int) {
-	accessibilityGrid := make([][]bool, len(grid))
+	rows := len(grid)
+	cols := len(grid[0])
+
+	accessibilityGrid := make([][]bool, rows)
 	totalAccessible := 0
-	for y := range len(grid) {
-		for x := range len(grid[0]) {
+	for y := range rows {
+		accessibilityGrid[y] = make([]bool, cols)
+		for x := range cols {
 			accessible := isAccessible(grid, x, y)
-			accessibilityGrid[y] = append(accessibilityGrid[y], accessible)
+			accessibilityGrid[y][x] = accessible
 			if accessible {
 				totalAccessible++
 			}
@@ -73,7 +77,7 @@ func printGrid(grid [][]bool, accessibilityGrid [][]bool) {
 			if grid[y][x] {
 				char = '@'
 			}
-			if accessibilityGrid[y][x] {
+			if y < len(accessibilityGrid) && x < len(accessibilityGrid[0]) && accessibilityGrid[y][x] {
 				char = 'x'
 			}
 			fmt.Printf("%c", char)
@@ -83,11 +87,15 @@ func printGrid(grid [][]bool, accessibilityGrid [][]bool) {
 }
 
 func removeAccessibleRolls(grid [][]bool, accessible [][]bool) [][]bool {
-	newGrid := make([][]bool, len(grid))
-	for y := range grid {
-		for x := range grid[0] {
+	rows := len(grid)
+	cols := len(grid[0])
+
+	newGrid := make([][]bool, rows)
+	for y := range rows {
+		newGrid[y] = make([]bool, cols)
+		for x := range cols {
 			hasRoll := grid[y][x] && !accessible[y][x]
-			newGrid[y] = append(newGrid[y], hasRoll)
+			newGrid[y][x] = hasRoll
 		}
 	}
 	return newGrid
@@ -95,6 +103,7 @@ func removeAccessibleRolls(grid [][]bool, accessible [][]bool) [][]bool {
 
 func part1(input []string) int {
 	grid := parseGrid(input)
+	printGrid(grid, [][]bool{})
 	accessibilityGrid, result := calculateAccessibilityGrid(grid)
 	printGrid(grid, accessibilityGrid)
 	return result
