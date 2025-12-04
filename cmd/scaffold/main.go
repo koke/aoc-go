@@ -40,9 +40,8 @@ func findLatestDay() (string, string) {
 
 	var days []int
 	for _, entry := range yearEntries {
-		if entry.IsDir() && strings.HasPrefix(entry.Name(), "day") {
-			dayStr := strings.TrimPrefix(entry.Name(), "day")
-			if day, err := strconv.Atoi(dayStr); err == nil {
+		if entry.IsDir() {
+			if day, err := strconv.Atoi(entry.Name()); err == nil {
 				days = append(days, day)
 			}
 		}
@@ -85,7 +84,7 @@ func main() {
 	day := parts[1]
 
 	// Create directory
-	dir := filepath.Join(year, "day"+day)
+	dir := filepath.Join(year, day)
 	if err := os.MkdirAll(dir, 0755); err != nil {
 		fmt.Printf("Error creating directory: %v\n", err)
 		os.Exit(1)
@@ -118,7 +117,7 @@ func main() {
 	os.WriteFile(filepath.Join(dir, "input.txt"), []byte(""), 0644)
 	os.WriteFile(filepath.Join(dir, "test.txt"), []byte(""), 0644)
 
-	fmt.Printf("✓ Created %s/day%s/\n", year, day)
-	fmt.Printf("Run with: go run %s/day%s\n", year, day)
-	fmt.Printf("Run test: go run %s/day%s test\n", year, day)
+	fmt.Printf("✓ Created %s/%s/\n", year, day)
+	fmt.Printf("Run with: go run %s/%s\n", year, day)
+	fmt.Printf("Run test: go run %s/%s test\n", year, day)
 }

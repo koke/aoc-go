@@ -1,12 +1,12 @@
 package main
 
 import (
-	day1_2024 "aoc/2024/day1"
-	day2_2024 "aoc/2024/day2"
-	day3_2024 "aoc/2024/day3"
-	day1_2025 "aoc/2025/day1"
-	day2_2025 "aoc/2025/day2"
-	day3_2025 "aoc/2025/day3"
+	day1_2024 "aoc/2024/1"
+	day2_2024 "aoc/2024/2"
+	day3_2024 "aoc/2024/3"
+	day1_2025 "aoc/2025/1"
+	day2_2025 "aoc/2025/2"
+	day3_2025 "aoc/2025/3"
 	"aoc/utils"
 	"fmt"
 	"os"
@@ -36,7 +36,7 @@ func main() {
 	parts := strings.Split(input, "/")
 	year := parts[0]
 	dayNum := parts[1]
-	inputPath := filepath.Join(year, fmt.Sprintf("day%s", dayNum), inputFile)
+	inputPath := filepath.Join(year, dayNum, inputFile)
 
 	fmt.Printf("Running %s Day %s\n", year, dayNum)
 
