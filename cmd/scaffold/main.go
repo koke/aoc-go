@@ -119,5 +119,5 @@ func main() {
 
 	fmt.Printf("✓ Created %s/%s/\n", year, day)
 	fmt.Printf("Run with: go run %s/%s\n", year, day)
-	fmt.Printf("Run test: go run %s/%s test\n", year, day)
+	fmt.Printf("Run test: go run %s/%s -t\n", year, day)
 }
