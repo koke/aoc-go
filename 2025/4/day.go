@@ -5,10 +5,13 @@ import (
 	"fmt"
 )
 
+var config utils.Config
+
 func main() {
 	fmt.Println("Running 2025 Day 4")
 
-	inputPath := utils.InitConfig().InputPath
+	config = utils.InitConfig()
+	inputPath := config.InputPath
 	lines := utils.ReadLines(inputPath)
 	utils.RunPart("Part 1", lines, part1)
 	utils.RunPart("Part 2", lines, part2)
@@ -61,6 +64,9 @@ func calculateAccessibilityGrid(grid [][]bool) ([][]bool, int) {
 }
 
 func printGrid(grid [][]bool, accessibilityGrid [][]bool) {
+	if !config.Debug {
+		return
+	}
 	for y := range grid {
 		for x := range grid[0] {
 			char := '.'
