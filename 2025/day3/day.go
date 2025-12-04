@@ -2,11 +2,25 @@ package day3_2025
 
 import (
 	"aoc/utils"
-	"fmt"
 	"strings"
 )
 
 type Day struct{}
+
+type partInput struct {
+	lines       []string
+	batteriesOn int
+}
+
+func (d Day) Run(input string) {
+	lines, err := utils.ReadLines(input)
+	if err != nil {
+		panic(err)
+	}
+
+	utils.RunPart("Part 1", partInput{lines, 2}, part)
+	utils.RunPart("Part 2", partInput{lines, 12}, part)
+}
 
 func maxJoltage(bank string, batteriesOn int) int {
 	joltage := []byte(strings.Repeat("0", batteriesOn))
@@ -30,32 +44,16 @@ func maxJoltage(bank string, batteriesOn int) int {
 	return utils.Atoi(string(joltage))
 }
 
-func (Day) Part1(input string) int {
-	lines, err := utils.ReadLines(input)
-	if err != nil {
-		panic(err)
-	}
-
+func part(input partInput) int {
 	totalJoltage := 0
-	for _, line := range lines {
-		joltage := maxJoltage(line, 2)
-		fmt.Println("Bank:", line, "Max Joltage:", joltage)
+	for _, line := range input.lines {
+		joltage := maxJoltage(line, input.batteriesOn)
+		// fmt.Println("Bank:", line, "Max Joltage:", joltage)
 		totalJoltage += joltage
 	}
 	return totalJoltage
 }
 
-func (Day) Part2(input string) int {
-	lines, err := utils.ReadLines(input)
-	if err != nil {
-		panic(err)
-	}
-
-	totalJoltage := 0
-	for _, line := range lines {
-		joltage := maxJoltage(line, 12)
-		fmt.Println("Bank:", line, "Max Joltage:", joltage)
-		totalJoltage += joltage
-	}
-	return totalJoltage
-}
+// Keep old methods for backward compatibility (not used when Run is defined)
+func (Day) Part1(input string) int { return 0 }
+func (Day) Part2(input string) int { return 0 }

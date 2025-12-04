@@ -12,6 +12,17 @@ type Day interface {
 	Part2(inputPath string) int
 }
 
+type DayRunner interface {
+	Run(inputPath string)
+}
+
+func RunPart[T any](label string, input T, fn func(T) int) {
+	start := time.Now()
+	result := fn(input)
+	elapsed := time.Since(start)
+	fmt.Printf("%s: %d (Time: %s)\n", label, result, elapsed)
+}
+
 func RunDay(input string, d Day, inputFile string) {
 	parts := strings.Split(input, "/")
 	year := parts[0]
@@ -21,6 +32,13 @@ func RunDay(input string, d Day, inputFile string) {
 
 	fmt.Printf("Running %s Day %s\n", year, day)
 
+	// Check if it's a new-style DayRunner
+	if runner, ok := d.(DayRunner); ok {
+		runner.Run(inputPath)
+		return
+	}
+
+	// Fall back to old-style Part1/Part2
 	start1 := time.Now()
 	result1 := d.Part1(inputPath)
 	elapsed1 := time.Since(start1)
