@@ -1,6 +1,7 @@
 package day2_2025
 
 import (
+	"aoc/utils"
 	"math"
 	"os"
 	"strconv"
@@ -8,6 +9,11 @@ import (
 )
 
 type Day struct{}
+
+func (d Day) Run(input string) {
+	utils.RunPart("Part 1", input, part1)
+	utils.RunPart("Part 2", input, part2)
+}
 
 type Range struct {
 	low, high int
@@ -71,10 +77,10 @@ func validateInput(input string, maxRepeat int) int {
 	return invalidSum
 }
 
-func (Day) Part1(input string) int {
+func part1(input string) int {
 	return validateInput(input, 2)
 }
 
-func (Day) Part2(input string) int {
+func part2(input string) int {
 	return validateInput(input, math.MaxInt)
 }

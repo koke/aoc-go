@@ -10,6 +10,11 @@ import (
 
 type Day struct{}
 
+func (d Day) Run(input string) {
+	utils.RunPart("Part 1", input, part1)
+	utils.RunPart("Part 2", input, part2)
+}
+
 func readPairs(input string) (left []int, right []int, err error) {
 	lines, err := utils.ReadLines(input)
 	if err != nil {
@@ -39,7 +44,7 @@ func readPairs(input string) (left []int, right []int, err error) {
 	return left, right, nil
 }
 
-func (Day) Part1(input string) int {
+func part1(input string) int {
 	left, right, err := readPairs(input)
 	if err != nil {
 		panic(err)
@@ -62,7 +67,7 @@ func (Day) Part1(input string) int {
 	return diffSum
 }
 
-func (Day) Part2(input string) int {
+func part2(input string) int {
 	left, right, err := readPairs(input)
 	if err != nil {
 		panic(err)

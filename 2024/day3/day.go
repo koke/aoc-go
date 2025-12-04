@@ -1,6 +1,7 @@
 package day3_2024
 
 import (
+	"aoc/utils"
 	"fmt"
 	"os"
 	"regexp"
@@ -9,7 +10,12 @@ import (
 
 type Day struct{}
 
-func (Day) Part1(input string) int {
+func (d Day) Run(input string) {
+	utils.RunPart("Part 1", input, part1)
+	utils.RunPart("Part 2", input, part2)
+}
+
+func part1(input string) int {
 	memoryBytes, err := os.ReadFile(input)
 	if err != nil {
 		panic(err)
@@ -35,7 +41,7 @@ func (Day) Part1(input string) int {
 	return result
 }
 
-func (Day) Part2(input string) int {
+func part2(input string) int {
 	memoryBytes, err := os.ReadFile(input)
 	if err != nil {
 		panic(err)

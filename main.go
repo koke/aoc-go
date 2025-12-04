@@ -10,6 +10,8 @@ import (
 	"aoc/utils"
 	"fmt"
 	"os"
+	"path/filepath"
+	"strings"
 )
 
 func main() {
@@ -29,6 +31,14 @@ func main() {
 	}
 
 	utils.DebugEnabled = false
+
+	// Parse year/day and build input path
+	parts := strings.Split(input, "/")
+	year := parts[0]
+	dayNum := parts[1]
+	inputPath := filepath.Join(year, fmt.Sprintf("day%s", dayNum), inputFile)
+
+	fmt.Printf("Running %s Day %s\n", year, dayNum)
 
 	var day utils.Day
 
@@ -50,5 +60,5 @@ func main() {
 		os.Exit(1)
 	}
 
-	utils.RunDay(input, day, inputFile)
+	day.Run(inputPath)
 }

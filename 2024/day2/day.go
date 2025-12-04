@@ -7,6 +7,11 @@ import (
 
 type Day struct{}
 
+func (d Day) Run(input string) {
+	utils.RunPart("Part 1", input, part1)
+	utils.RunPart("Part 2", input, part2)
+}
+
 func isSafe(levels []int) bool {
 	direction := utils.Sign(levels[1] - levels[0])
 	for i := range len(levels) - 1 {
@@ -24,7 +29,7 @@ func isSafe(levels []int) bool {
 	return true
 }
 
-func (Day) Part1(input string) int {
+func part1(input string) int {
 	reports, err := utils.ReadMatrix(input)
 	if err != nil {
 		panic(err)
@@ -39,7 +44,7 @@ func (Day) Part1(input string) int {
 	return safe
 }
 
-func (Day) Part2(input string) int {
+func part2(input string) int {
 	reports, err := utils.ReadMatrix(input)
 	if err != nil {
 		panic(err)

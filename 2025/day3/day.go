@@ -53,7 +53,3 @@ func part(input partInput) int {
 	}
 	return totalJoltage
 }
-
-// Keep old methods for backward compatibility (not used when Run is defined)
-func (Day) Part1(input string) int { return 0 }
-func (Day) Part2(input string) int { return 0 }
