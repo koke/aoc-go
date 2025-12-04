@@ -1,18 +1,22 @@
-package day2_2025
+package main
 
 import (
 	"aoc/utils"
+	"fmt"
 	"math"
 	"os"
 	"strconv"
 	"strings"
 )
 
-type Day struct{}
+func main() {
+	fmt.Println("Running 2025 Day 2")
 
-func (d Day) Run(input string) {
-	utils.RunPart("Part 1", input, part1)
-	utils.RunPart("Part 2", input, part2)
+	inputPath := utils.InitConfig().InputPath
+	ranges := parseInput(inputPath)
+
+	utils.RunPart("Part 1", ranges, part1)
+	utils.RunPart("Part 2", ranges, part2)
 }
 
 type Range struct {
@@ -61,9 +65,7 @@ func isValid(n int, maxRepeat int) bool {
 	return true
 }
 
-func validateInput(input string, maxRepeat int) int {
-	ranges := parseInput(input)
-
+func validateInput(ranges []Range, maxRepeat int) int {
 	invalidSum := 0
 
 	for _, r := range ranges {
@@ -77,10 +79,10 @@ func validateInput(input string, maxRepeat int) int {
 	return invalidSum
 }
 
-func part1(input string) int {
-	return validateInput(input, 2)
+func part1(ranges []Range) int {
+	return validateInput(ranges, 2)
 }
 
-func part2(input string) int {
-	return validateInput(input, math.MaxInt)
+func part2(ranges []Range) int {
+	return validateInput(ranges, math.MaxInt)
 }

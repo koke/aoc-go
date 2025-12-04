@@ -8,7 +8,7 @@ import (
 func main() {
 	fmt.Println("Running {{YEAR}} Day {{DAY}}")
 
-	inputPath := utils.GetInputPath()
+	inputPath := utils.InitConfig().InputPath
 	utils.RunPart("Part 1", inputPath, part1)
 	utils.RunPart("Part 2", inputPath, part2)
 }

@@ -1,4 +1,4 @@
-package day3_2024
+package main
 
 import (
 	"aoc/utils"
@@ -8,11 +8,13 @@ import (
 	"strconv"
 )
 
-type Day struct{}
+func main() {
+	fmt.Println("Running 2024 Day 3")
 
-func (d Day) Run(input string) {
-	utils.RunPart("Part 1", input, part1)
-	utils.RunPart("Part 2", input, part2)
+	inputPath := utils.InitConfig().InputPath
+
+	utils.RunPart("Part 1", inputPath, part1)
+	utils.RunPart("Part 2", inputPath, part2)
 }
 
 func part1(input string) int {

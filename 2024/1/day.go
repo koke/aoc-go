@@ -1,4 +1,4 @@
-package day1_2024
+package main
 
 import (
 	"aoc/utils"
@@ -8,18 +8,17 @@ import (
 	"strings"
 )
 
-type Day struct{}
+func main() {
+	fmt.Println("Running 2024 Day 1")
 
-func (d Day) Run(input string) {
-	utils.RunPart("Part 1", input, part1)
-	utils.RunPart("Part 2", input, part2)
+	inputPath := utils.InitConfig().InputPath
+
+	utils.RunPart("Part 1", inputPath, part1)
+	utils.RunPart("Part 2", inputPath, part2)
 }
 
 func readPairs(input string) (left []int, right []int, err error) {
-	lines, err := utils.ReadLines(input)
-	if err != nil {
-		return nil, nil, fmt.Errorf("error reading input: %v", err)
-	}
+	lines := utils.ReadLines(input)
 
 	for _, line := range lines {
 		parts := strings.Fields(line)

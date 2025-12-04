@@ -1,15 +1,19 @@
-package day1_2025
+package main
 
 import (
 	"aoc/utils"
+	"fmt"
 	"strconv"
 )
 
-type Day struct{}
+func main() {
+	fmt.Println("Running 2025 Day 1")
 
-func (d Day) Run(input string) {
-	utils.RunPart("Part 1", input, part1)
-	utils.RunPart("Part 2", input, part2)
+	inputPath := utils.InitConfig().InputPath
+	rotations := parseInput(inputPath)
+
+	utils.RunPart("Part 1", rotations, part1)
+	utils.RunPart("Part 2", rotations, part2)
 }
 
 // Returns x modulo 100, wrapping around correctly for negative numbers
@@ -22,10 +26,7 @@ func circlemod(x int) int {
 }
 
 func parseInput(input string) []int {
-	lines, err := utils.ReadLines(input)
-	if err != nil {
-		panic(err)
-	}
+	lines := utils.ReadLines(input)
 
 	var numbers []int
 	for _, line := range lines {
@@ -60,9 +61,7 @@ func turnDial(current int, rotation int) (int, int) {
 	return circlemod(final), clicks
 }
 
-func part1(input string) int {
-	rotations := parseInput(input)
-
+func part1(rotations []int) int {
 	dial := 50
 	password := 0
 
@@ -77,9 +76,7 @@ func part1(input string) int {
 	return password
 }
 
-func part2(input string) int {
-	rotations := parseInput(input)
-
+func part2(rotations []int) int {
 	dial := 50
 	password := 0
 

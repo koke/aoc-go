@@ -1,22 +1,21 @@
-package day3_2025
+package main
 
 import (
 	"aoc/utils"
+	"fmt"
 	"strings"
 )
-
-type Day struct{}
 
 type partInput struct {
 	lines       []string
 	batteriesOn int
 }
 
-func (d Day) Run(input string) {
-	lines, err := utils.ReadLines(input)
-	if err != nil {
-		panic(err)
-	}
+func main() {
+	fmt.Println("Running 2025 Day 3")
+
+	inputPath := utils.InitConfig().InputPath
+	lines := utils.ReadLines(inputPath)
 
 	utils.RunPart("Part 1", partInput{lines, 2}, part)
 	utils.RunPart("Part 2", partInput{lines, 12}, part)

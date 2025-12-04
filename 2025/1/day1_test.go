@@ -1,4 +1,4 @@
-package day1_2025
+package main
 
 import "testing"
 
