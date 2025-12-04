@@ -17,8 +17,8 @@ type Config struct {
 var config Config = Config{}
 
 func InitConfig() Config {
-	flag.BoolVar(&config.Debug, "debug", false, "Enable debug mode")
-	flag.BoolVar(&config.TestMode, "test", false, "Use test input file")
+	flag.BoolVar(&config.Debug, "d", false, "Enable debug mode")
+	flag.BoolVar(&config.TestMode, "t", false, "Use test input file")
 	flag.Parse()
 
 	config.InputPath = getInputPath()
