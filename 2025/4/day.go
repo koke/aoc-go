@@ -76,14 +76,35 @@ func printGrid(grid [][]bool, accessibilityGrid [][]bool) {
 	}
 }
 
+func removeAccessibleRolls(grid [][]bool, accessible [][]bool) [][]bool {
+	newGrid := make([][]bool, len(grid))
+	for y := range grid {
+		for x := range grid[0] {
+			hasRoll := grid[y][x] && !accessible[y][x]
+			newGrid[y] = append(newGrid[y], hasRoll)
+		}
+	}
+	return newGrid
+}
+
 func part1(input []string) int {
 	grid := parseGrid(input)
-	utils.Debug("%v", grid)
 	accessibilityGrid, result := calculateAccessibilityGrid(grid)
 	printGrid(grid, accessibilityGrid)
 	return result
 }
 
 func part2(input []string) int {
-	return 0
+	grid := parseGrid(input)
+	removed := 0
+	for i := 0; ; i++ {
+		accessibilityGrid, result := calculateAccessibilityGrid(grid)
+		utils.Debug("Iteration %d: removed %d rolls", i, result)
+		printGrid(grid, accessibilityGrid)
+		removed += result
+		if result == 0 {
+			return removed
+		}
+		grid = removeAccessibleRolls(grid, accessibilityGrid)
+	}
 }
