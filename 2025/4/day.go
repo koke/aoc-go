@@ -15,6 +15,7 @@ func main() {
 	lines := utils.ReadLines(inputPath)
 	utils.RunPart("Part 1", lines, part1)
 	utils.RunPart("Part 2", lines, part2)
+	utils.RunPart("Part 2 (Optimized)", lines, part2Optimized)
 }
 
 func parseGrid(input []string) [][]bool {
@@ -67,6 +68,64 @@ func calculateAccessibilityGrid(grid [][]bool) ([][]bool, int) {
 	return accessibilityGrid, totalAccessible
 }
 
+func calculateAccessibilityGridOptimized(grid [][]bool) ([][]bool, int) {
+	rows := len(grid)
+	if rows == 0 {
+		return [][]bool{}, 0
+	}
+	cols := len(grid[0])
+
+	accessibilityGrid := make([][]bool, rows)
+	totalAccessible := 0
+
+	for i := range rows {
+		accessibilityGrid[i] = make([]bool, cols)
+		for j := range cols {
+			if !grid[i][j] {
+				continue // Cell itself is not occupied
+			}
+
+			// Count neighbors
+			count := 0
+			if i > 0 {
+				if j > 0 && grid[i-1][j-1] {
+					count++
+				}
+				if grid[i-1][j] {
+					count++
+				}
+				if j < cols-1 && grid[i-1][j+1] {
+					count++
+				}
+			}
+			if j > 0 && grid[i][j-1] {
+				count++
+			}
+			if j < cols-1 && grid[i][j+1] {
+				count++
+			}
+			if i < rows-1 {
+				if j > 0 && grid[i+1][j-1] {
+					count++
+				}
+				if grid[i+1][j] {
+					count++
+				}
+				if j < cols-1 && grid[i+1][j+1] {
+					count++
+				}
+			}
+
+			if count < 4 {
+				accessibilityGrid[i][j] = true
+				totalAccessible++
+			}
+		}
+	}
+
+	return accessibilityGrid, totalAccessible
+}
+
 func printGrid(grid [][]bool, accessibilityGrid [][]bool) {
 	if !config.Debug {
 		return
@@ -114,6 +173,21 @@ func part2(input []string) int {
 	removed := 0
 	for i := 0; ; i++ {
 		accessibilityGrid, result := calculateAccessibilityGrid(grid)
+		utils.Debug("Iteration %d: removed %d rolls", i, result)
+		printGrid(grid, accessibilityGrid)
+		removed += result
+		if result == 0 {
+			return removed
+		}
+		grid = removeAccessibleRolls(grid, accessibilityGrid)
+	}
+}
+
+func part2Optimized(input []string) int {
+	grid := parseGrid(input)
+	removed := 0
+	for i := 0; ; i++ {
+		accessibilityGrid, result := calculateAccessibilityGridOptimized(grid)
 		utils.Debug("Iteration %d: removed %d rolls", i, result)
 		printGrid(grid, accessibilityGrid)
 		removed += result
