@@ -19,17 +19,13 @@ func main() {
 	utils.RunPart("Part 2", ranges, part2)
 }
 
-type Range struct {
-	low, high int
-}
-
-func parseInput(filename string) []Range {
+func parseInput(filename string) []utils.Range {
 	data, err := os.ReadFile(filename)
 	if err != nil {
 		panic(err)
 	}
 
-	var ranges []Range
+	var ranges []utils.Range
 	for rangeStr := range strings.SplitSeq(strings.TrimSpace(string(data)), ",") {
 		rangeParts := strings.Split(rangeStr, "-")
 		lower, err := strconv.Atoi(rangeParts[0])
@@ -41,7 +37,7 @@ func parseInput(filename string) []Range {
 			panic(err)
 		}
 
-		ranges = append(ranges, Range{low: lower, high: higher})
+		ranges = append(ranges, utils.Range{Low: lower, High: higher})
 	}
 	return ranges
 }
@@ -65,11 +61,11 @@ func isValid(n int, maxRepeat int) bool {
 	return true
 }
 
-func validateInput(ranges []Range, maxRepeat int) int {
+func validateInput(ranges []utils.Range, maxRepeat int) int {
 	invalidSum := 0
 
 	for _, r := range ranges {
-		for n := r.low; n <= r.high; n++ {
+		for n := r.Low; n <= r.High; n++ {
 			if !isValid(n, maxRepeat) {
 				invalidSum += n
 			}
@@ -79,10 +75,10 @@ func validateInput(ranges []Range, maxRepeat int) int {
 	return invalidSum
 }
 
-func part1(ranges []Range) int {
+func part1(ranges []utils.Range) int {
 	return validateInput(ranges, 2)
 }
 
-func part2(ranges []Range) int {
+func part2(ranges []utils.Range) int {
 	return validateInput(ranges, math.MaxInt)
 }
