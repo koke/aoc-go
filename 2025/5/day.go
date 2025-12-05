@@ -3,6 +3,7 @@ package main
 import (
 	"aoc/utils"
 	"fmt"
+	"sort"
 	"strings"
 )
 
@@ -31,7 +32,35 @@ func part1(db database) int {
 }
 
 func part2(db database) int {
-	return 0
+	// The naive approach won't work as the input has very large ranges.
+	// We need to find all the overlapping ranges and combine them.
+
+	sort.Slice(db.ranges, func(i, j int) bool {
+		return db.ranges[i].Low < db.ranges[j].Low
+	})
+	combinedRanges := []utils.Range{db.ranges[0]}
+	utils.Debug("Combining ranges: %v", db.ranges)
+
+	for i := 1; i < len(db.ranges); i++ {
+		r := db.ranges[i]
+		last := &combinedRanges[len(combinedRanges)-1]
+
+		if last.Overlaps(r) {
+			utils.Debug("Combining overlapping ranges %d-%d and %d-%d", last.Low, last.High, r.Low, r.High)
+			last.High = max(last.High, r.High)
+		} else {
+			utils.Debug("Adding non-overlapping range %d-%d", r.Low, r.High)
+			combinedRanges = append(combinedRanges, r)
+		}
+		utils.Debug("Combined ranges so far: %v", combinedRanges)
+	}
+
+	totalFresh := 0
+	for _, r := range combinedRanges {
+		totalFresh += r.High - r.Low + 1
+	}
+
+	return totalFresh
 }
 
 func parseInput(input string) database {
