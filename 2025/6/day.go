@@ -70,5 +70,40 @@ func part1(input string) int {
 }
 
 func part2(input string) int {
-	return 0
+	lines := utils.ReadLines(input)
+	lastLine := lines[len(lines)-1]
+
+	solution := 0
+	values := []int{}
+	// values := make([]int, len(lines))
+	for col := len(lines[0]) - 1; col >= 0; col-- {
+		colValue := 0
+		for row := range len(lines) - 1 {
+			value, err := strconv.Atoi(string(lines[row][col]))
+			if err == nil {
+				colValue = colValue*10 + value
+			}
+		}
+		utils.Debug("Column %d value: %d", col, colValue)
+		if colValue > 0 {
+			values = append(values, colValue)
+		}
+		var op byte
+		if len(lastLine) > col {
+			op = lastLine[col]
+			if op != '+' && op != '*' {
+				continue
+			}
+			problem := problem{
+				values:   values,
+				operator: operation(op),
+			}
+			result := solve(problem)
+			utils.Debug("Values: %v", values)
+			utils.Debug("Operator at column %d: %c. Result: %d", col, op, result)
+			solution += result
+			values = []int{}
+		}
+	}
+	return solution
 }
